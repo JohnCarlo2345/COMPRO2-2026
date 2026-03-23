@@ -21,4 +21,5 @@ public class NestedMenu {
             System.out.println("[3] Exit");
             System.out.print("Enter choice");
             mainChoice = scanner.nextInt();
+            
         }
