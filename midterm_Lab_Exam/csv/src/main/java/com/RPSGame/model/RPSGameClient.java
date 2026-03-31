@@ -31,7 +31,7 @@ public class RPSGameClient {
                 System.out.println("SERVER: " + serverMessage);
                 
                 // If the server tells us to choose, send our pick
-                if (serverMessage.contains("choose")) { // Simple check - works for our messages
+                if (serverMessage.contains("choose")) {
                     System.out.print("Your choice: ");
                     String myChoice = userInput.nextLine();
                     outToServer.println(myChoice);
