@@ -14,6 +14,7 @@ public class RPSGameClient {
                 System.out.print("Enter server IP address (type 'localhost' if playing on same computer): ");
                 String serverIP = userInput.nextLine();
                 final int PORT = 1234;
+
                 try (Socket clientSocket = new Socket(serverIP, PORT)) {
                     System.out.println("Connected to game server!\n");
                     BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
