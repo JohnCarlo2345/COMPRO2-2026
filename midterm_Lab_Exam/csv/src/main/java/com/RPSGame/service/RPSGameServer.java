@@ -159,8 +159,6 @@ public class RPSGameServer {
 
         try {
             gameServer = new ServerSocket(PORT);
-
-
             // First player connects
             player1 = gameServer.accept();
             System.out.println("Player 1 joined from: " + player1.getInetAddress());
@@ -237,9 +235,9 @@ public class RPSGameServer {
     // Helper method to create GameMove object
     public static GameMove createMove(String type) {
         return switch (type) {
-            case "1" -> new Rock();
-            case "2" -> new Paper();
-            case "3" -> new Scissors();
+            case "0" -> new Rock();
+            case "1" -> new Paper();
+            case "2" -> new Scissors();
             default -> new Rock();
         };
     }
