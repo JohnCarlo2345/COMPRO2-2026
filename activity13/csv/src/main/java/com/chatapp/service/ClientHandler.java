@@ -1,4 +1,4 @@
-package com.multithreading.service;
+package com.chatapp.service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -27,7 +27,6 @@ public class ClientHandler implements Runnable {
             // Keep listening until client disconnects
             while ((message = input.readLine()) != null) {
                 System.out.println("Received: " + message);
-                
                 // Echo message back or send to others
                 output.println("Server: " + message);
             }
