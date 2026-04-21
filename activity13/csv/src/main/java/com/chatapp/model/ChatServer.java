@@ -1,10 +1,9 @@
-package com.multithreading.model;
+package com.chatapp.model;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-
-import com.multithreading.service.ClientHandler;
+import com.chatapp.service.ClientHandler;
 
 public class ChatServer {
     public static void main(String[] args) {
