@@ -6,15 +6,18 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+
 public class ClientHandler implements Runnable {
     private final Socket socket;
     private BufferedReader input;
     private PrintWriter output;
 
+
     // Constructor
     public ClientHandler(Socket socket) {
         this.socket = socket;
     }
+
 
     @Override
     public void run() {
@@ -22,6 +25,7 @@ public class ClientHandler implements Runnable {
             // Setup I/O Streams
             input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             output = new PrintWriter(socket.getOutputStream(), true);
+
 
             String message;
             // Keep listening until client disconnects
@@ -31,6 +35,7 @@ public class ClientHandler implements Runnable {
                 output.println("Server: " + message);
             }
 
+
         } catch (IOException e) {
             System.out.println("Client Disconnected!");
         } finally {
@@ -39,9 +44,9 @@ public class ClientHandler implements Runnable {
             } catch (IOException e) {
             }
         }
+
+
     }
 }
-
-
 
 
