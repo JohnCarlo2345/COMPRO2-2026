@@ -1,18 +1,15 @@
 package com.rpsgame.service;
 
 public abstract class GameMove {
-    private String moveName;
-
+    private final String moveName;
 
     public GameMove(String name) {
         this.moveName = name;
     }
 
-
     public String getMoveName() { return moveName; }
     public abstract int compare(GameMove other);
 }
-
 
 class Rock extends GameMove {
     public Rock() { super("Rock"); }
@@ -23,7 +20,6 @@ class Rock extends GameMove {
     }
 }
 
-
 class Paper extends GameMove {
     public Paper() { super("Paper"); }
     @Override public int compare(GameMove other) {
@@ -33,7 +29,6 @@ class Paper extends GameMove {
     }
 }
 
-
 class Scissors extends GameMove {
     public Scissors() { super("Scissors"); }
     @Override public int compare(GameMove other) {
@@ -42,10 +37,5 @@ class Scissors extends GameMove {
         return 0;
     }
 }
-
-
-
-
-
 
 

@@ -6,11 +6,15 @@ public class GameSession {
     private int roundsPlayed;
 
 
+
+
     public GameSession(Player p1, Player p2) {
         this.p1 = p1;
         this.p2 = p2;
         this.roundsPlayed = 0;
     }
+
+
 
 
     public String playRound() {
@@ -19,28 +23,42 @@ public class GameSession {
         GameMove m2 = p2.getCurrentMove();
 
 
+
+
         int result = m1.compare(m2);
         String outcome;
 
 
-        if (result == 1) {
-            p1.incrementScore();
-            outcome = p1.getName() + " WINS this round!";
-        } else if (result == -1) {
-            p2.incrementScore();
-            outcome = p2.getName() + " WINS this round!";
-        } else {
-            outcome = "It's a TIE!";
+
+
+        switch (result) {
+            case 1:
+                p1.incrementScore();
+                outcome = p1.getName() + " WINS this round!";
+                break;
+            case -1:
+                p2.incrementScore();
+                outcome = p2.getName() + " WINS this round!";
+                break;
+            default:
+                outcome = "It's a TIE!";
+                break;
         }
+
+
 
 
         return outcome + " | SCORE: " + p1.getName() + " " + p1.getScore() + " - " + p2.getScore() + " " + p2.getName();
     }
 
 
+
+
     public boolean isGameOver() {
         return roundsPlayed >= 10;
     }
+
+
 
 
     public String getFinalResult() {
@@ -49,10 +67,4 @@ public class GameSession {
         else return "GAME OVER! IT'S A DRAW!";
     }
 }
-
-
-
-
-
-
 

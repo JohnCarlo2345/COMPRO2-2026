@@ -7,12 +7,10 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
-
 public class RPSGameClient {
     public static void main(String[] args) {
         try {
             Scanner userInput = new Scanner(System.in);
-           
             System.out.print("Enter server IP: ");
             String serverIP = userInput.nextLine();
             final int PORT = 1234;
@@ -20,8 +18,12 @@ public class RPSGameClient {
             System.out.println("Connected!\n");
 
 
+
+
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+
+
 
 
             System.out.print("Enter Username: ");
@@ -30,12 +32,18 @@ public class RPSGameClient {
             String pass = userInput.nextLine();
 
 
+
+
             out.println(user);
             out.println(pass);
 
 
+
+
             String response = in.readLine();
             System.out.println("SERVER: " + response);
+
+
 
 
             if (response.startsWith("INVALID")) {
@@ -45,10 +53,14 @@ public class RPSGameClient {
             }
 
 
+
+
             String msg;
             int round = 1;
             while ((msg = in.readLine()) != null) {
                 System.out.println("SERVER: " + msg);
+
+
 
 
                 if (msg.contains("Choose")) {
@@ -58,14 +70,20 @@ public class RPSGameClient {
                 }
 
 
+
+
                 if (msg.startsWith("GAME OVER")) {
                     break;
                 }
             }
 
 
+
+
             clientSocket.close();
             userInput.close();
+
+
 
 
         } catch (IOException e) {
@@ -73,6 +91,13 @@ public class RPSGameClient {
         }
     }
 }
+
+
+
+
+
+
+
 
 
 
