@@ -1,0 +1,18 @@
+package com.boardgame.model;
+
+public abstract class GameMove {
+    protected int x;
+    protected int y;
+
+    public GameMove(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public int getX() { return x; }
+    public int getY() { return y; }
+
+    public abstract boolean isValid(Board board);
+    public abstract void execute(Board board);
+}
+
