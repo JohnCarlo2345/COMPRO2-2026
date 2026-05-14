@@ -41,7 +41,7 @@ public class BattleshipGameClient {
                 }
                 else if (signal.equals("WAIT")) {
                     System.out.println("⌛ Opponent's turn... please wait.");
-                } 
+                }
                 else if (signal.startsWith("OPPONENT")) {
                     String[] parts = signal.split(" ");
                     int x = Integer.parseInt(parts[1]);
@@ -62,7 +62,6 @@ public class BattleshipGameClient {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }

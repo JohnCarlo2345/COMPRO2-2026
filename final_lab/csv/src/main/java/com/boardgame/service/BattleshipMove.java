@@ -1,5 +1,8 @@
 package com.boardgame.service;
 
+import com.boardgame.model.Board;
+import com.boardgame.model.GameMove;
+
 public class BattleshipMove extends GameMove {
     public BattleshipMove(int x, int y) {
         super(x, y);

@@ -1,8 +1,15 @@
 package com.boardgame.service;
 
-import java.io.*;
-import java.net.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.time.LocalDateTime;
+import com.boardgame.model.ConnectionLostException;
+import com.boardgame.model.GameMove;
 
 public class BattleshipGameServer {
     private static final int PORT = 5000;
@@ -26,68 +33,67 @@ public class BattleshipGameServer {
             BattleshipGame game = new BattleshipGame();
             boolean isP1Turn = true;
 
-            // Persistence: save to history.csv
-            BufferedWriter log = new BufferedWriter(new FileWriter("history.csv", true));
-            log.write("Timestamp,Player,X,Y,Result\n");
+            try ( // Persistence: save to history.csv
+                    BufferedWriter log = new BufferedWriter(new FileWriter("history.csv", true))) {
+                log.write("Timestamp,Player,X,Y,Result\n");
 
-            // Ping-Pong turn loop
-            while (!game.isGameOver()) {
-                try {
-                    if (isP1Turn) {
-                        p1Out.println("YOUR_TURN");
-                        p2Out.println("WAIT");
+                // Ping-Pong turn loop
+                while (!game.isGameOver()) {
+                    try {
+                        if (isP1Turn) {
+                            p1Out.println("YOUR_TURN");
+                            p2Out.println("WAIT");
 
-                        String moveStr = p1In.readLine();
-                        if (moveStr == null) throw new ConnectionLostException("Player 1 disconnected");
+                            String moveStr = p1In.readLine();
+                            if (moveStr == null) throw new ConnectionLostException("Player 1 disconnected");
 
-                        String[] xy = moveStr.split(",");
-                        int x = Integer.parseInt(xy[0]);
-                        int y = Integer.parseInt(xy[1]);
+                            String[] xy = moveStr.split(",");
+                            int x = Integer.parseInt(xy[0]);
+                            int y = Integer.parseInt(xy[1]);
 
-                        GameMove move = new BattleshipMove(x, y);
-                        boolean hit = game.processMove(move, game.getP2Board());
+                            GameMove move = new BattleshipMove(x, y);
+                            boolean hit = game.processMove(move, game.getP2Board());
 
-                        log.write(LocalDateTime.now() + ",P1," + x + "," + y + "," + (hit ? "HIT" : "MISS") + "\n");
-                        p1Out.println(hit ? "HIT" : "MISS");
-                        p2Out.println("OPPONENT " + x + " " + y + " " + (hit ? "HIT" : "MISS"));
-                    } 
-                    else {
-                        p2Out.println("YOUR_TURN");
-                        p1Out.println("WAIT");
+                            log.write(LocalDateTime.now() + ",P1," + x + "," + y + "," + (hit ? "HIT" : "MISS") + "\n");
+                            p1Out.println(hit ? "HIT" : "MISS");
+                            p2Out.println("OPPONENT " + x + " " + y + " " + (hit ? "HIT" : "MISS"));
+                        }
+                        else {
+                            p2Out.println("YOUR_TURN");
+                            p1Out.println("WAIT");
 
-                        String moveStr = p2In.readLine();
-                        if (moveStr == null) throw new ConnectionLostException("Player 2 disconnected");
+                            String moveStr = p2In.readLine();
+                            if (moveStr == null) throw new ConnectionLostException("Player 2 disconnected");
 
-                        String[] xy = moveStr.split(",");
-                        int x = Integer.parseInt(xy[0]);
-                        int y = Integer.parseInt(xy[1]);
+                            String[] xy = moveStr.split(",");
+                            int x = Integer.parseInt(xy[0]);
+                            int y = Integer.parseInt(xy[1]);
 
-                        GameMove move = new BattleshipMove(x, y);
-                        boolean hit = game.processMove(move, game.getP1Board());
+                            GameMove move = new BattleshipMove(x, y);
+                            boolean hit = game.processMove(move, game.getP1Board());
 
-                        log.write(LocalDateTime.now() + ",P2," + x + "," + y + "," + (hit ? "HIT" : "MISS") + "\n");
-                        p2Out.println(hit ? "HIT" : "MISS");
-                        p1Out.println("OPPONENT " + x + " " + y + " " + (hit ? "HIT" : "MISS"));
+                            log.write(LocalDateTime.now() + ",P2," + x + "," + y + "," + (hit ? "HIT" : "MISS") + "\n");
+                            p2Out.println(hit ? "HIT" : "MISS");
+                            p1Out.println("OPPONENT " + x + " " + y + " " + (hit ? "HIT" : "MISS"));
+                        }
+
+                        isP1Turn = !isP1Turn;
+
+                    } catch (InvalidMoveException e) {
+                        System.out.println("Error: " + e.getMessage());
+                    } catch (ConnectionLostException e) {
+                        System.err.println("Connection lost: " + e.getMessage());
+                        break;
                     }
-
-                    isP1Turn = !isP1Turn;
-
-                } catch (InvalidMoveException e) {
-                    System.out.println("Error: " + e.getMessage());
-                } catch (ConnectionLostException e) {
-                    System.err.println("Connection lost: " + e.getMessage());
-                    break;
                 }
-            }
 
-            log.write(LocalDateTime.now() + ",GAME_OVER,,,\n");
-            log.close();
+                log.write(LocalDateTime.now() + ",GAME_OVER,,,\n");
+            }
             p1Out.println("GAME_OVER");
             p2Out.println("GAME_OVER");
             System.out.println("Game finished. History saved.");
 
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }

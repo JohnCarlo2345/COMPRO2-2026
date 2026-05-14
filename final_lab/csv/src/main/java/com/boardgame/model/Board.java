@@ -2,7 +2,7 @@ package com.boardgame.model;
 
 public class Board {
     public static final int SIZE = 10;
-    private char[][] grid; // '~'=water, 'S'=ship, 'X'=hit, 'O'=miss
+    private final char[][] grid; // '~'=water, 'S'=ship, 'X'=hit, 'O'=miss
 
     public Board() {
         grid = new char[SIZE][SIZE];

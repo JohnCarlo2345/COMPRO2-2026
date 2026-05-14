@@ -1,10 +1,12 @@
 package com.boardgame.service;
 
 import java.util.Random;
+import com.boardgame.model.Board;
+import com.boardgame.model.GameMove;
 
 public class BattleshipGame {
-    private Board p1Board;
-    private Board p2Board;
+    private final Board p1Board;
+    private final Board p2Board;
 
     public BattleshipGame() {
         p1Board = new Board();
