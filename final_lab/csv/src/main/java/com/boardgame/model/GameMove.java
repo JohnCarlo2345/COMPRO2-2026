@@ -1,5 +1,7 @@
 package com.boardgame.model;
 
+import com.boardgame.service.Board;
+
 public abstract class GameMove {
     protected int x;
     protected int y;
@@ -9,8 +11,13 @@ public abstract class GameMove {
         this.y = y;
     }
 
-    public int getX() { return x; }
-    public int getY() { return y; }
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
 
     public abstract boolean isValid(Board board);
     public abstract void execute(Board board);

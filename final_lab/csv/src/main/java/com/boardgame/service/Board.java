@@ -1,8 +1,8 @@
-package com.boardgame.model;
+package com.boardgame.service;
 
 public class Board {
     public static final int SIZE = 10;
-    private final char[][] grid; // '~'=water, 'S'=ship, 'X'=hit, 'O'=miss
+    private char[][] grid; // '~' = water, 'S' = ship, 'X' = hit, 'O' = miss
 
     public Board() {
         grid = new char[SIZE][SIZE];
@@ -17,8 +17,13 @@ public class Board {
         return x >= 0 && x < SIZE && y >= 0 && y < SIZE;
     }
 
-    public char getCell(int x, int y) { return grid[x][y]; }
-    public void setCell(int x, int y, char state) { grid[x][y] = state; }
+    public char getCell(int x, int y) {
+        return grid[x][y];
+    }
+
+    public void setCell(int x, int y, char state) {
+        grid[x][y] = state;
+    }
 
     public void print() {
         System.out.println("  0 1 2 3 4 5 6 7 8 9");
@@ -33,9 +38,13 @@ public class Board {
 
     public int getRemainingShips() {
         int count = 0;
-        for (int i = 0; i < SIZE; i++)
-            for (int j = 0; j < SIZE; j++)
-                if (grid[i][j] == 'S') count++;
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if (grid[i][j] == 'S') {
+                    count++;
+                }
+            }
+        }
         return count;
     }
 }
