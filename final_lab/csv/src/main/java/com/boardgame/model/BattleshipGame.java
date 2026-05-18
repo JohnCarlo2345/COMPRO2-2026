@@ -24,7 +24,7 @@ public class BattleshipGame {
         placeShipsFixed(p2Board);
     }
 
-    // Fixed positions — NO Random / NO extra import
+    // Fixed positions
     private void placeShipsFixed(Board board) {
         board.setCell(1, 1, 'S');
         board.setCell(2, 3, 'S');
@@ -63,7 +63,7 @@ public class BattleshipGame {
         return p1Board.getRemainingShips() == 0 || p2Board.getRemainingShips() == 0;
     }
 
-    // UPDATED LEADERBOARD: Ships Sunk + Hits + Misses
+    // LEADERBOARD: Ships Sunk + Hits + Misses
     public String getLeaderboard() {
         return "===== LEADERBOARD =====" + "\n" +
                "PLAYER 1" + "\n" +
