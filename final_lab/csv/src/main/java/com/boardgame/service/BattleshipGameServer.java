@@ -9,7 +9,6 @@ import com.boardgame.model.GameMove;
 
 public class BattleshipGameServer {
     private static final int PORT = 5000;
-
     public static void main(String[] args) {
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
             System.out.println("Battleship Game Server running on port " + PORT);
@@ -113,7 +112,7 @@ public class BattleshipGameServer {
 
             log.write(LocalDateTime.now() + ",GAME_OVER,,,,,,,,,,\n");
             log.close();
-            
+
             // Send final result
             p1Out.println("GAME_OVER");
             p1Out.println(game.getLeaderboard());

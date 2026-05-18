@@ -8,7 +8,6 @@ import com.boardgame.service.Board;
 public class BattleshipGameClient {
     private static final String HOST = "localhost";
     private static final int PORT = 5000;
-
     public static void main(String[] args) throws NumberFormatException, IOException {
         try (Socket socket = new Socket(HOST, PORT);
              BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
