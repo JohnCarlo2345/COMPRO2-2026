@@ -26,6 +26,7 @@ public class BattleshipGame {
 
     // Fixed positions
     private void placeShipsFixed(Board board) {
+        //var a= random
         board.setCell(1, 1, 'S');
         board.setCell(2, 3, 'S');
         board.setCell(4, 5, 'S');
@@ -63,7 +64,7 @@ public class BattleshipGame {
         return p1Board.getRemainingShips() == 0 || p2Board.getRemainingShips() == 0;
     }
 
-    // LEADERBOARD: Ships Sunk + Hits + Misses
+    // LEADERBOARD: Ships Sunk and Hits and Misses
     public String getLeaderboard() {
         return "===== LEADERBOARD =====" + "\n" +
                "PLAYER 1" + "\n" +

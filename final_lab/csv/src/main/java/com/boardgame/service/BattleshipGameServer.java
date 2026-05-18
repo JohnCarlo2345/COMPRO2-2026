@@ -60,7 +60,7 @@ public class BattleshipGameServer {
 
                         log.write(LocalDateTime.now() + ",P1," + x + "," + y + "," + (hit ? "HIT" : "MISS") + "," + p1Sunk + "," + p1Hit + "," + p1Miss + "," + p2Sunk + "," + p2Hit + "," + p2Miss + "\n");
 
-                        // Send result + leaderboard
+                        // Send result and leaderboard
                         p1Out.println(hit ? "HIT" : "MISS");
                         p1Out.println(game.getLeaderboard());
                         p2Out.println("OPPONENT " + x + " " + y + " " + (hit ? "HIT" : "MISS"));
@@ -82,7 +82,7 @@ public class BattleshipGameServer {
                         GameMove move = new BattleshipMove(x, y);
                         boolean hit = game.processMove(move, game.getP1Board(), false);
 
-                        // Save all stats to CSV
+                        // Save all the stats to CSV
                         String lb = game.getLeaderboard();
                         String[] lines = lb.split("\n");
                         int p1Sunk = Integer.parseInt(lines[2].split(": ")[1]);
