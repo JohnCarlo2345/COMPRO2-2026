@@ -1,6 +1,7 @@
 package com.boardgame.model;
 
 import com.boardgame.service.Board;
+import com.boardgame.service.InvalidMoveException;
 
 public abstract class GameMove {
     protected int x;
@@ -11,15 +12,12 @@ public abstract class GameMove {
         this.y = y;
     }
 
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
     public abstract boolean isValid(Board board);
-    public abstract void execute(Board board);
+    public abstract void execute(Board board) throws InvalidMoveException;
+
+    public int getX() { return x; }
+    public int getY() { return y; }
 }
+
+
 

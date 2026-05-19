@@ -1,14 +1,15 @@
 package com.boardgame.model;
 
+import com.boardgame.service.Board;
+
 import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
-import com.boardgame.service.Board;
 
 public class BattleshipGameClient {
     private static final String HOST = "localhost";
     private static final int PORT = 5000;
-    public static void main(String[] args) throws NumberFormatException, IOException {
+    public static void main(String[] args) {
         try (Socket socket = new Socket(HOST, PORT);
              BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
              PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
@@ -100,7 +101,19 @@ public class BattleshipGameClient {
                     System.out.println(lb9);
                     System.out.println(lb10);
                 }
+                else if (signal.equals("GAME_OVER")) {
+                    System.out.println("=== GAME OVER ===");
+                    // Read and show final leaderboard
+                    String finalLine;
+                    while ((finalLine = in.readLine()) != null) {
+                        System.out.println(finalLine);
+                    }
+                }
             }
+
+        } catch (IOException e) {
+            System.out.println("Connection error: " + e.getMessage());
         }
     }
 }
+

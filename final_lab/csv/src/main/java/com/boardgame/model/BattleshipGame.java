@@ -2,17 +2,17 @@ package com.boardgame.model;
 
 import com.boardgame.service.Board;
 import com.boardgame.service.InvalidMoveException;
+import java.util.Random;
 
 public class BattleshipGame {
     private Board p1Board;
     private Board p2Board;
+    private Random random;
 
-    // Player 1 Stats
     private int p1ShipsSunk = 0;
     private int p1Hits = 0;
     private int p1Misses = 0;
 
-    // Player 2 Stats
     private int p2ShipsSunk = 0;
     private int p2Hits = 0;
     private int p2Misses = 0;
@@ -20,18 +20,21 @@ public class BattleshipGame {
     public BattleshipGame() {
         p1Board = new Board();
         p2Board = new Board();
-        placeShipsFixed(p1Board);
-        placeShipsFixed(p2Board);
+        random = new Random();
+        placeShipsRandom(p1Board);
+        placeShipsRandom(p2Board);
     }
 
-    // Fixed positions
-    private void placeShipsFixed(Board board) {
-        //var a= random
-        board.setCell(1, 1, 'S');
-        board.setCell(2, 3, 'S');
-        board.setCell(4, 5, 'S');
-        board.setCell(6, 7, 'S');
-        board.setCell(8, 2, 'S');
+    private void placeShipsRandom(Board board) {
+        int shipCount = 0;
+        while (shipCount < 5) {
+            int x = random.nextInt(Board.SIZE);
+            int y = random.nextInt(Board.SIZE);
+            if (board.getCell(x, y) == Board.EMPTY) {
+                board.setCell(x, y, 'S');
+                shipCount++;
+            }
+        }
     }
 
     public boolean processMove(GameMove move, Board targetBoard, boolean isPlayer1Turn) throws InvalidMoveException {
@@ -41,7 +44,6 @@ public class BattleshipGame {
         move.execute(targetBoard);
         boolean hit = (targetBoard.getCell(move.getX(), move.getY()) == 'X');
 
-        // Update Stats
         if (isPlayer1Turn) {
             if (hit) {
                 p1Hits++;
@@ -64,7 +66,6 @@ public class BattleshipGame {
         return p1Board.getRemainingShips() == 0 || p2Board.getRemainingShips() == 0;
     }
 
-    // LEADERBOARD: Ships Sunk and Hits and Misses
     public String getLeaderboard() {
         return "===== LEADERBOARD =====" + "\n" +
                "PLAYER 1" + "\n" +
@@ -79,12 +80,7 @@ public class BattleshipGame {
                "=======================";
     }
 
-    public Board getP1Board() {
-        return p1Board;
-    }
-
-    public Board getP2Board() {
-        return p2Board;
-    }
+    public Board getP1Board() { return p1Board; }
+    public Board getP2Board() { return p2Board; }
 }
 
